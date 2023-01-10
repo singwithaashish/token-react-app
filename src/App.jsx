@@ -9,7 +9,6 @@ function App() {
   const [redTokenPerRow, setRedTokenPerRow] = useState(0);
   const [showTokens, setShowTokens] = useState(false);
 
-
   const handleGenerate = (e) => {
     e.preventDefault();
     setBlueTokenNo(e.target.blue_tkn_no.value);
@@ -19,9 +18,25 @@ function App() {
     setRedTokenPrefix(e.target.red_tkn_prefix.value);
     setRedTokenPerRow(e.target.red_tkn_row.value);
     setShowTokens(true);
-    console.log(e.target.blue_tkn_no.value);
+    console.log(redTokenPerRow);
+  };
 
-    console.log("Generate button clicked");
+  const handleClear = (e) => {
+    e.preventDefault();
+    setBlueTokenNo(0);
+    setBlueTokenPrefix("");
+    setBlueTokenPerRow(0);
+    setRedTokenNo(0);
+    setRedTokenPrefix("");
+    setRedTokenPerRow(0);
+    setShowTokens(false);
+
+    // e.target.blue_tkn_no.value = "";
+    // e.target.blue_tkn_prefix.value = "";
+    // e.target.blue_tkn_row.value = "";
+    // e.target.red_tkn_no.value = "";
+    // e.target.red_tkn_prefix.value = "";
+    // e.target.red_tkn_row.value = "";
   };
 
   return (
@@ -30,7 +45,7 @@ function App() {
         <h2 className="text-red-600">Token Generator Application</h2>
       </header>
       <section className="generatorform">
-        <form className="w-[50vw] " onSubmit={e => handleGenerate(e)}>
+        <form className="w-[50vw] " onSubmit={(e) => handleGenerate(e)}>
           <div className="grid grid-cols-4 my-5">
             <label
               htmlFor="blue_tkn_no"
@@ -123,33 +138,52 @@ function App() {
             >
               Generate
             </button>
-            <button onClick={() => setShowTokens(false)} className="col-span-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            <button
+              onClick={(e) => handleClear(e)}
+              type="reset"
+              value={"reset"}
+              className="col-span-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
               Clear
             </button>
           </div>
         </form>
       </section>
       <section className="w-[100vw] grid grid-cols-4">
-        <div className="col-span-1"></div>
+        <div className="col-span-1"></div> {/*leaving empty space at start*/}
         <div className="col-span-3">
-        <div className={`grid grid-cols-${blueTokenPerRow}`}>
-          {
-            showTokens && Array.from({length: blueTokenNo}, (v, i) => i + 1).map((v, i) => {
-              return <p className="border-2 border-black p-5 
-              whitespace-nowrap 
-              col-span-1 bg-blue-700">{blueTokenPrefix + v}</p>
-            }
-            )
-          }
-        </div>
-        <div className={`grid grid-cols-${redTokenPerRow}`}>
-          {
-            showTokens && Array.from({length: redTokenNo}, (v, i) => i + 1).map((v, i) => {
-              return <div className="border-2 border-black  whitespace-nowrap p-5 col-span-1 bg-red-700">{redTokenPrefix + v}</div>
-            }
-            )
-          }
-        </div>
+          <div className={`grid gap-2 mb-5 grid-cols-${blueTokenPerRow} `}>
+            {showTokens &&
+              Array.from({ length: blueTokenNo }, (v, i) => i + 1).map(
+                (v, i) => {
+                  return (
+                    <p
+                      key={i}
+                      className="border-2 border-black text-center py-5
+              whitespace-nowrap
+              col-span-1 bg-blue-700"
+                    >
+                      {blueTokenPrefix + v}
+                    </p>
+                  );
+                }
+              )}
+          </div>
+          <div className={`grid gap-2 grid-cols-${redTokenPerRow}`}>
+            {showTokens &&
+              Array.from({ length: redTokenNo }, (v, i) => i + 1).map(
+                (v, i) => {
+                  return (
+                    <p
+                      key={i}
+                      className="border-2 border-black  whitespace-nowrap py-5 text-center col-span-1 bg-red-700"
+                    >
+                      {redTokenPrefix + v}
+                    </p>
+                  );
+                }
+              )}
+          </div>
         </div>
       </section>
     </main>
