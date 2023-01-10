@@ -31,12 +31,13 @@ function App() {
     setRedTokenPerRow(0);
     setShowTokens(false);
 
-    // e.target.blue_tkn_no.value = "";
-    // e.target.blue_tkn_prefix.value = "";
-    // e.target.blue_tkn_row.value = "";
-    // e.target.red_tkn_no.value = "";
-    // e.target.red_tkn_prefix.value = "";
-    // e.target.red_tkn_row.value = "";
+    document.getElementById("blue_tkn_no").value = "";
+    document.getElementById("blue_tkn_prefix").value = "";
+    document.getElementById("blue_tkn_row").value = "";
+    document.getElementById("red_tkn_no").value = "";
+    document.getElementById("red_tkn_prefix").value = "";
+    document.getElementById("red_tkn_row").value = "";
+
   };
 
   return (
@@ -149,10 +150,14 @@ function App() {
           </div>
         </form>
       </section>
-      <section className="w-[100vw] grid grid-cols-4">
-        <div className="col-span-1"></div> {/*leaving empty space at start*/}
-        <div className="col-span-3">
-          <div className={`grid gap-2 mb-5 grid-cols-${blueTokenPerRow} `}>
+      <section className="w-[100vw] flex">
+        <div className="col-span-1 w-[25%]"></div>{" "}
+        {/*leaving empty space at start*/}
+        <div className="col-span-3 w-[75%]">
+          <div
+            className={`grid gap-2 mb-5 `}
+            style={{ gridTemplateColumns: `repeat(${blueTokenPerRow}, 1fr)` }}
+          >
             {showTokens &&
               Array.from({ length: blueTokenNo }, (v, i) => i + 1).map(
                 (v, i) => {
@@ -160,8 +165,8 @@ function App() {
                     <p
                       key={i}
                       className="border-2 border-black text-center py-5
-              whitespace-nowrap
-              col-span-1 bg-blue-700"
+              whitespace-nowrap col-span-1
+               bg-blue-700"
                     >
                       {blueTokenPrefix + v}
                     </p>
@@ -169,7 +174,10 @@ function App() {
                 }
               )}
           </div>
-          <div className={`grid gap-2 grid-cols-${redTokenPerRow}`}>
+          <div
+            className={`grid gap-2 `}
+            style={{ gridTemplateColumns: `repeat(${redTokenPerRow}, 1fr)` }}
+          >
             {showTokens &&
               Array.from({ length: redTokenNo }, (v, i) => i + 1).map(
                 (v, i) => {
